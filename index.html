@@ -15,8 +15,9 @@
     // Cordova is ready
     //
     function onDeviceReady() {
-        // Throw an error if no update is received every 30 seconds
-        var options = { timeout: 500 };
+        // Get the most accurate position updates available on the
+        // device.
+        var options = { enableHighAccuracy: true };
         watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
     }
 
@@ -26,20 +27,30 @@
         var element = document.getElementById('geolocation');
         element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
                             'Longitude: ' + position.coords.longitude     + '<br />' +
-                            'Speed: '     + position.coords.speed         + '<br />'
+                            'Speed: '     + position.coords.speed         + '<br />' +
                             '<hr />'      + element.innerHTML;
+    }
+
+    // clear the watch that was started earlier
+    // 
+    function clearWatch() {
+        if (watchID != null) {
+            navigator.geolocation.clearWatch(watchID);
+            watchID = null;
+        }
     }
 
     // onError Callback receives a PositionError object
     //
     function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
+      alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');
     }
 
     </script>
   </head>
   <body>
-    <p id="geolocation">Atualizando</p>
+    <p id="geolocation">Teste</p>
+    <button onclick="clearWatch();">Clear Watch</button>     
   </body>
 </html>
