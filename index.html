@@ -2,7 +2,11 @@
 <html>
     <head>
         <title>Device Properties Example</title>
-        
+        <style>#tudo {
+    width: 200px;
+    height: 200px;
+    margin: 400px auto;
+}</style>
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" charset="utf-8">
 
@@ -25,10 +29,14 @@
     //
     function onSuccess(position) {
         var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
-                            'Longitude: ' + position.coords.longitude     + '<br />' +
-                            'Speed: '     + position.coords.speed         + '<br />' +
-                            '<hr />'      + element.innerHTML;
+        velocidade = position.coords.speed;
+        velocidade = velocidade * 3,6;
+        if (velocidade>velocidadeFinal) {
+            
+            element.innerHTML = velocidade;
+            
+            velocidadeFinal=velocidade;
+        }
     }
 
     // clear the watch that was started earlier
@@ -50,7 +58,8 @@
     </script>
   </head>
   <body>
-    <p id="geolocation">Teste</p>
-    <button onclick="clearWatch();">Clear Watch</button>     
+    <div id='tudo'><button onclick="clearWatch();">Clear Watch</button>    
+    <p id="geolocation">Atualizando</p></div>
+    
   </body>
 </html>
